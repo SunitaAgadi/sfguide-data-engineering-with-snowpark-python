@@ -36,7 +36,8 @@ def get_snowpark_session() -> Session:
             "role": os.environ["SNOWSQL_ROLE"],
             "warehouse": os.environ["SNOWSQL_WAREHOUSE"],
             "database": os.environ["SNOWSQL_DATABASE"],
-            "schema": os.environ["SNOWSQL_SCHEMA"]
+            "schema": os.environ["SNOWSQL_SCHEMA"],
+            "region":os.environ["SNOWSQL_REGION"]
         }
         SnowflakeConnection().connection = Session.builder.configs(snowpark_config).create()
 
@@ -82,3 +83,34 @@ def get_snowsql_config(
         raise Exception(
             "Error getting snowsql config details"
         )
+def get_snowsql_config():
+    try:
+        # Your existing code to read SnowSQL config
+        # ...
+
+        # Ensure the 'region' key is present or handle it gracefully
+        snowsql_config = {}
+        for k, v in snowsql_config_mapping.items():
+            try:
+                snowsql_config[v] = snowsql_config_mapping[k].strip('"')
+            except KeyError:
+                if k == 'region':
+                    snowsql_config['region'] = 'your_default_region'
+                else:
+                    raise
+
+        return snowsql_config
+    except Exception as e:
+        print(f"Error getting SnowSQL config details: {e}")
+        raise
+
+def get_snowpark_session():
+    try:
+        snowpark_config = get_snowsql_config()
+
+        # Your existing code to create a Snowpark session
+        # ...
+
+    except Exception as e:
+        print(f"Error creating Snowpark session: {e}")
+        raise

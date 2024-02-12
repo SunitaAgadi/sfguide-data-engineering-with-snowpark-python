@@ -1,9 +1,11 @@
 # SnowSQL config
 
 [connections.dev]
-accountname = II70323
-username = SUNITA
+account = II70323  
+user = SUNITA
 password = SidNaaz@12
-rolename = ACCOUNTADMIN
-warehousename = HOL_WH
-dbname = HOL_DB
+database = HOL_DB
+schema = RAW_POS
+warehouse = HOL_WH
+role = ACCOUNTADMIN
+region = central-india
